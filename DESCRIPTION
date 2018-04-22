@@ -2,6 +2,14 @@ Package: AbbyyXML
 Title: Read Optical Character Recognition Results from Abbyy XML Files
 Description: Functionality to read the XML documents resulting from optical character recognition
   by Abbyy on an image.
+  For now, the important functionality is to get the locations of the important elements on the
+  page, and to plot them.  There are some convenience features to facilitate using the functions,
+  e.g., methods and subscripting of documents.
+  This serves a different purpose than the abbyyr package. That allows one to interact with the
+  Abbyy cloud service and API, i.e. to upload documents to be OCR'ed and retrieve the results.
+  That package doesn't process the results other than retrieving the contents. This is a good
+  division of labor and focus in the package, i.e. not doing both.  This is teh UNIX philosophy
+  of doing one thing and doing it well.
 Version: 0.1-0
 Maintainer: Duncan Temple Lang <duncan@r-project.org>
 Author: Duncan Temple Lang <duncan@r-project.org>, Matt Espe

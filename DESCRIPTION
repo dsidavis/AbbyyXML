@@ -1,0 +1,10 @@
+Package: AbbyyXML
+Title: Read Optical Character Recognition Results from Abbyy XML Files
+Description: Functionality to read the XML documents resulting from optical character recognition
+  by Abbyy on an image.
+Version: 0.1-0
+Maintainer: Duncan Temple Lang <duncan@r-project.org>
+Author: Duncan Temple Lang <duncan@r-project.org>, Matt Espe
+License: BSD3 + LICENSE
+Imports: XML, methods
+Note: See Rtesseract for similar but richer functionality associtaed with tesseract OCR.

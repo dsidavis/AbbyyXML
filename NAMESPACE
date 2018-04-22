@@ -1,0 +1,21 @@
+import(XML)
+import(methods)
+
+export(
+    readAbbyy,
+    getBBox,
+    plotPage,
+    getPageDims,
+    getLines,
+    getText,
+    getTables
+  )
+
+
+exportMethods("[[", coerce, plot)
+S3method("[[", "AbbyyXMLDocument")
+S3method("getBBox", "AbbyyXMLPage")
+S3method("getBBox", "list")
+S3method("getBBox", "XMLNodeSet")
+
+

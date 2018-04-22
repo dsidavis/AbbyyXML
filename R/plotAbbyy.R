@@ -1,6 +1,8 @@
 # <separator>  lines   start and end nodes, thickness attribute
 
 
+
+
 plotPage =
     #
     # Can drop the text that is in pictures.
@@ -8,10 +10,9 @@ plotPage =
     # showPicText needs to figure out where the picture blocks are and find the intersecting text
     #
     #
-function(p, dims = getPageDims(p), title = basename(docName(p)), showSeparators = FALSE, showPicText = TRUE)
+function(p, dims = getPageDims(p), main = basename(docName(p)), showSeparators = FALSE, showPicText = TRUE, cex = 1, ...)
 {
-    plot(0, type = "n", xlab = "", ylab = "", xlim = c(0, dims["width"]), ylim = c(0, dims["height"]))
-    title(title)
+    plot(0, type = "n", xlab = "", ylab = "", xlim = c(0, dims["width"]), ylim = c(0, dims["height"]), main = main, ...)
     
     h = dims["height"]
 
@@ -34,14 +35,37 @@ function(p, dims = getPageDims(p), title = basename(docName(p)), showSeparators 
     }
 
     bb = getBBox(lines)
-    text(bb$left, h - bb$bottom, bb$text, adj = c(0, 0) )
+    text(bb$left, h - bb$bottom, bb$text, adj = c(0, 0), cex = cex)
 #    blocks = xmlChildren(p)
 #    bb = getBBox(blocks)    
 #    rect(bb[, "left"], h - bb[, "bottom"], bb[, "right"], h - bb[, "top"], border = "lightgreen")
 }
 
+
+setMethod("plot", "AbbyyXMLPage",
+          function(x, y, ...) {
+              plotPage(x, ...)
+          })
+
+
+setMethod("plot", "AbbyyXMLDocument",
+          function(x, y, ...) {
+              plotPage(x[[1]], ...)
+          })
+
 getBBox =
-function(nodes, attrs = c(left = "l", top = "t", right = "r", bottom = "b"), addSuspicious = TRUE)
+function(nodes, attrs = c(left = "l", top = "t", right = "r", bottom = "b"), addSuspicious = TRUE)    
+    UseMethod("getBBox")
+
+getBBox.AbbyyXMLPage =
+function(nodes, attrs = c(left = "l", top = "t", right = "r", bottom = "b"), addSuspicious = TRUE)    
+{
+    nodes = getNodeSet(nodes, ".//x:line", "x")
+    getBBox(nodes, attrs, addSuspicious)
+}    
+
+getBBox.list = getBBox.XMLNodeSet =
+function(nodes, attrs = c(left = "l", top = "t", right = "r", bottom = "b"), addSuspicious = TRUE)    
 {
     ans = as.data.frame(t(sapply(nodes, function(x) as.integer(xmlAttrs(x)[attrs]))), row.names = seq(along = nodes))
     names(ans) = names(attrs)
@@ -71,6 +95,13 @@ getLines = getText =
 function(doc)
 {
     xpathSApply(doc, "//x:line",  xmlValue, namespaces = "x")               
+}
+
+
+getTables =
+function(doc)
+{
+  xpathApply(doc, "//x:block[@blockTy[pe = 'Table']",  getTable, namespace = "x")
 }
 
 

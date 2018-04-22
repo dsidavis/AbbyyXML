@@ -7,7 +7,7 @@ function(file, ...)
 }    
 
 setOldClass(c("AbbyyXMLDocument", "XMLInternalDocument", "XMLAbstractDocument"))
-setAs("character", "AbbyyXMLDocument", function(from) readAbby(from))  # different parameter name would give a warning?
+setAs("character", "AbbyyXMLDocument", function(from) readAbbyy(from))  # different parameter name would give a warning?
 
 # Would like to inherit from the ReadPDF package for page[[1]]
 
